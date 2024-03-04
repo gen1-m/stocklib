@@ -1,4 +1,6 @@
 import { GeistSans } from "geist/font/sans";
+import { Providers } from "./providers";
+import NavBar from "@/components/NavBar";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -19,9 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
+        <Providers>
+          <NavBar />
+            <main className="min-h-screen flex flex-col items-center">
+              {children}
+            </main>
+        </Providers>
       </body>
     </html>
   );
