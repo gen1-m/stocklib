@@ -1,3 +1,4 @@
+"use client";
 import {
   Navbar,
   NavbarBrand,
@@ -7,9 +8,12 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 
-import AuthButton from "./AuthButton";
+interface Params {
+  authButton: any;
+}
 
-export default function NavBar() {
+export default function NavBar(params: Params) {
+
   return (
     <Navbar isBordered>
       <NavbarBrand>
@@ -45,7 +49,7 @@ export default function NavBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="flex">
-          <AuthButton />
+          {params.authButton}
         </NavbarItem>
       </NavbarContent>
     </Navbar>
