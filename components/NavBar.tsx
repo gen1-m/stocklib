@@ -1,4 +1,3 @@
-// 'use client';
 import {
   Navbar,
   NavbarBrand,
@@ -11,7 +10,6 @@ import Image from "next/image";
 import AuthButton from "./AuthButton";
 
 export default function NavBar() {
-
   return (
     <Navbar isBordered>
       <NavbarBrand>
@@ -53,3 +51,4 @@ export default function NavBar() {
     </Navbar>
   );
 }
+
