@@ -32,8 +32,10 @@ export default function WebsocketCom() {
 
   return (
     <>
-      <button className="bg-orange-400" onClick={sendSocketEvent}>
-        {buttonSMS}
+      <button className="m-7" onClick={sendSocketEvent}>
+        <div className="p-2 rounded-xl bg-orange-400 text-black">
+          {buttonSMS}
+        </div>
       </button>
     </>
   )
