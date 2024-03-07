@@ -69,6 +69,11 @@ export default function NavBar(params: Params) {
             Watchlist
           </Link>
         </NavbarItem>
+        <NavbarItem isActive={handleActivePage("/websocket")}>
+          <Link color="foreground" href="/websocket">
+            Websocket
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">{params.authButton}</NavbarContent>
     </Navbar>
