@@ -1,7 +1,9 @@
-const { createServer } = require("http");
-const { Server } = require("socket.io");
+import * as express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
-const httpServer = createServer();
+const app: express.Application = express.default();
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
