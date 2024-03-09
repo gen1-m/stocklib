@@ -3,10 +3,18 @@
 import React, {useEffect, useState} from "react";
 import useSocket from "../hooks/useSocket";
 
+interface Trades {
+  c: any, 
+  s: string,
+  p: number,
+  t: number,
+  v: number
+}
+
 export default function WebsocketCom() {
   const socket = useSocket();
 
-  const [buttonSMS, setButtonSMS] = useState("Send event!");
+  const [trades, setTrades] = useState<Trades[]>([]);
 
   // the implementation of the socket connection
   // from the client-side
@@ -14,29 +22,33 @@ export default function WebsocketCom() {
     if (!socket) {
       return;
     }
-    // connection is successful => display socket id 
+    // connection is successful
     socket.on("connect", () => {
-      console.log("client id: ", socket.id);
-    })
+      console.log("Client connect!");
+    });
 
-    socket.on("responseEvent", (data) => {
-      setButtonSMS("Received response from the server:" + data);
-      console.log(data);
-    })
+
+    socket.on("message", (message) => {
+      const res = JSON.parse(message);
+      if (res.type == "trade") {
+        setTrades((prevTrades: Trades[]) => [...prevTrades, ...res.data]);
+      } 
+    });
 
   }, [socket]);
 
-  const sendSocketEvent= () => {
-    socket?.emit('myevent', "Hello server!");
-  }
-
   return (
     <>
-      <button className="m-7" onClick={sendSocketEvent}>
-        <div className="p-2 rounded-xl bg-orange-400 text-black">
-          {buttonSMS}
-        </div>
-      </button>
+      <h1>FinHub Tradess</h1>
+      <div>
+        {trades.map((message: Trades) => (
+          <>
+            <p key={message.s} className="text-xl text-white">
+              {/* Message: {message.p} */}
+            </p>
+          </>
+        ))}
+      </div>
     </>
   )
 }

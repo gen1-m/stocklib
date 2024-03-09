@@ -1,9 +1,11 @@
-import * as express from "express";
+import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { WebSocket } from 'ws';
 
-const app: express.Application = express.default();
+const app = express();
 const httpServer = createServer(app);
+
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
@@ -11,12 +13,30 @@ const io = new Server(httpServer, {
   },
 });
 
-io.on("connection", async (socket) => {
-  console.log("server id:", socket.id);
+const finhubSocket = new WebSocket(`wss://ws.finnhub.io?token=${process.env.FINNHUB_API_KEY}`);
 
-  socket.on("myevent", (data) => {
-    console.log(data);
-    socket.emit("responseEvent", 'Hello client!');
+// Connection opened -> Subscribe
+finhubSocket.addEventListener('open', () => {
+    finhubSocket.send(JSON.stringify({'type':'subscribe', 'symbol': 'AAPL'}))
+    finhubSocket.send(JSON.stringify({'type':'subscribe', 'symbol': 'BINANCE:BTCUSDT'}))
+    finhubSocket.send(JSON.stringify({'type':'subscribe', 'symbol': 'IC MARKETS:1'}))
+});
+
+// Listen for messages
+finhubSocket.addEventListener('message', (event) => {
+  io.emit('message', event.data);
+  // console.log('Message from server ', event.data);
+});
+
+// Unsubscribe
+var unsubscribe = function(symbol: any) {
+  finhubSocket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
+}
+  
+io.on("connection", async (socket) => {
+  socket.on("message", (event) => {
+    socket.emit('message', event);
+    console.log('Message from server', event.data);
   })
 });
 
