@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import useSocket from "../hooks/useSocket";
 
 interface Trades {
@@ -10,7 +10,7 @@ interface Trades {
   t: number,
   v: number
 }
-
+ 
 export default function WebsocketCom() {
   const socket = useSocket();
 
@@ -27,9 +27,11 @@ export default function WebsocketCom() {
       console.log("Client connect!");
     });
 
+    
 
     socket.on("message", (message) => {
       const res = JSON.parse(message);
+      console.log(res);
       if (res.type == "trade") {
         setTrades((prevTrades: Trades[]) => [...prevTrades, ...res.data]);
       } 
@@ -39,12 +41,12 @@ export default function WebsocketCom() {
 
   return (
     <>
-      <h1>FinHub Tradess</h1>
+      <h1>FinHub Trades</h1>
       <div>
         {trades.map((message: Trades) => (
           <>
             <p key={message.s} className="text-xl text-white">
-              {/* Message: {message.p} */}
+              Message: {message.s}
             </p>
           </>
         ))}

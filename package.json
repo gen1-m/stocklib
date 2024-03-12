@@ -4,7 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "server": "npx nodemon websocket_server/websocket.ts"
+    "server": "npx nodemon finhub_socket/websocket.ts"
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
@@ -15,6 +15,8 @@
     "express": "^4.18.3",
     "framer-motion": "^11.0.8",
     "geist": "^1.2.1",
+    "highcharts": "^11.4.0",
+    "highcharts-react-official": "^3.2.1",
     "marked": "^12.0.0",
     "next": "latest",
     "postcss": "8.4.33",

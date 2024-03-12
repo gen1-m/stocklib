@@ -29,9 +29,11 @@ finhubSocket.addEventListener('message', (event) => {
 });
 
 // Unsubscribe
-var unsubscribe = function(symbol: any) {
-  finhubSocket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
-}
+app.get('/unsubscribe/:symbol', (req, res) => {
+  const symbol = req.params.symbol;
+  finhubSocket.send(JSON.stringify({'type': 'unsubscribe', 'symbol': symbol}));
+  res.send(`Unsubscribed from ${symbol}`);
+});
   
 io.on("connection", async (socket) => {
   socket.on("message", (event) => {
