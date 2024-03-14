@@ -14,11 +14,14 @@ interface Params {
 }
 
 export default function NavBar(params: Params) {
-  const handleActivePage = (page: string) => {
-    const pathname: string = usePathname();
-    if (pathname == page) return true;
+  const pathname: string = usePathname();
 
-    return false;
+  const handleActivePage = (page: string) => {
+    return (pathname == page);
+  };
+
+  const isHomePage = () => {
+    return (pathname === "/");
   };
 
   return (
@@ -29,7 +32,7 @@ export default function NavBar(params: Params) {
           "flex",
           "relative",
           "h-full",
-          "items-center",
+          "items-center ",
           "data-[active=true]:after:content-['']",
           "data-[active=true]:after:absolute",
           "data-[active=true]:after:bottom-0",
@@ -75,7 +78,10 @@ export default function NavBar(params: Params) {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">{params.authButton}</NavbarContent>
+        <NavbarContent justify="end">
+          {!isHomePage() && params.authButton}
+        </NavbarContent>
+      
     </Navbar>
   );
 }
