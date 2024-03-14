@@ -131,8 +131,8 @@ export default function DisplayNews(params: Params) {
         {/* Top market */}
         {market.map((item) => (
           <div
-            key={item.id}
-            className="flex flex-col justify-center items-center m-3 p-6 border-2 border-orange-700 rounded-xl max-w-sm"
+          key={item.id}
+          className="flex flex-col justify-center items-center m-3 p-6 border-2 border-orange-700 rounded-xl max-w-sm"
           >
             {item.image ? (
               <Image
@@ -177,7 +177,7 @@ export default function DisplayNews(params: Params) {
             <a
               href={item.url}
               className="self-start text-blue-500 hover:text-violet-700"
-            >
+              >
               Read more..
             </a>
             <Tooltip content={unixTimestampToDate(item.datetime).toString()}>
@@ -191,3 +191,5 @@ export default function DisplayNews(params: Params) {
     </main>
   );
 }
+
+// code that i might use later. 
