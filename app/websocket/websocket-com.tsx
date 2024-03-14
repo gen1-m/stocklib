@@ -46,7 +46,7 @@ export default function WebsocketCom() {
         {trades.map((message: Trades) => (
           <>
             <p key={message.s} className="text-xl text-white">
-              Message: {message.s}
+              {/* Message: {message.s} */}
             </p>
           </>
         ))}

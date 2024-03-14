@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState, ChangeEvent } from "react";
-import { getMarketNews } from "../lib/functions";
+import { getMarketNews, getMarketStatus } from "../lib/functions";
 import Image from "next/image";
 import { marked } from "marked";
 import { Tooltip, Select, SelectItem } from "@nextui-org/react";
 
 interface Params {
-  category?: string;
   data?: any;
 }
 
@@ -21,23 +20,48 @@ interface MarketItem {
   source: string;
 }
 
-export default function DisplayNews(params: Params) {
-  const categories: string[] = ["general", "forex", "crypto", "merger"];
+interface MarketStatus {
+  exchange: string;
+  holiday: string | null;
+  isOpen: boolean;
+  session: string;
+  timezone: string;
+  t: number;
+}
 
-  const [market, setMarket] = useState<MarketItem[]>(params.data);
+export default function DisplayNews(params: Params) {
+  const categories: string[] = [
+    "general", 
+    "forex", 
+    "crypto", 
+    "merger"
+  ];
+
+  const [market, setMarket] = useState<MarketItem[]>(params.data.news);
   const [category, setCategory] = useState<string>(categories[0]);
+  const [marketStatus, setMarketStatus] = useState<MarketStatus>(params.data.status);
+  const [popup, setPopup] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchMarket = async () => {
+    const fetchData = async () => {
       try {
-        const res = await getMarketNews({ category });
-        const data: MarketItem[] = JSON.parse(res);
+        // awaiting for response
+        const resNews = await getMarketNews({ category });
+        const resStatus = await getMarketStatus();
+
+        // parsing the response
+        const data: MarketItem[] = JSON.parse(resNews);
+        const status: MarketStatus = JSON.parse(resStatus);
+
+        // updating the state
         setMarket(data);
+        setMarketStatus(status);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchMarket();
+
+    fetchData();
   }, [category]);
 
   const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -56,9 +80,36 @@ export default function DisplayNews(params: Params) {
 
   return (
     <main className="w-full">
-      <h1 className="text-4xl font-extrabold text-center mt-7">
-        Latest <span className="text-orange-800">market</span> news
-      </h1>
+      <div className="flex fixed p-3 mt-2 right-8">
+        {popup && 
+          <div className="bg-slate-700 rounded-xl text-slate-300 flex p-3">
+            Market is    
+              <span className="px-1">
+                {marketStatus.isOpen ? <span className=" text-green-400">open</span> : <span className="text-red-600">closed</span>}
+              </span>
+              <button onClick={() => setPopup(false)}>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24">
+                    <path 
+                      fill="currentColor" 
+                        d="m8.4 17l3.6-3.6l3.6 3.6l1.4-1.4l-3.6-3.6L17 8.4L15.6 7L12 10.6L8.4 7L7 8.4l3.6 3.6L7 
+                        15.6zm3.6 5q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 
+                        3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 
+                        1.35-3.175 2.138T12 22"
+                    />
+                </svg>
+              </button>
+          </div> 
+        }
+      </div>
+      <div className="flex font-extrabold mt-7 justify-center">
+        <h1 className="text-4xl self-center">
+          Latest <span className="text-orange-800">market</span> news
+        </h1>
+      </div>
       <div className="flex flex-wrap md:flex-nowrap justify-end m-10 mx-40 gap-4">
         <Select
           color="warning"
@@ -67,7 +118,7 @@ export default function DisplayNews(params: Params) {
           className="max-w-xs"
           value={category}
           onChange={handleCategory}
-        >
+          >
           {categories.map((category) => (
             <SelectItem key={category} value={category}>
               {/* To keep the first character uppercase */}
