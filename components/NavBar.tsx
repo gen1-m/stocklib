@@ -24,7 +24,7 @@ export default function NavBar(params: Params) {
     return (pathname === "/");
   };
 
-  return (
+  return (!isHomePage() && 
     <Navbar
       isBordered
       classNames={{
@@ -79,7 +79,7 @@ export default function NavBar(params: Params) {
         </NavbarItem>
       </NavbarContent>
         <NavbarContent justify="end">
-          {!isHomePage() && params.authButton}
+          {params.authButton}
         </NavbarContent>
       
     </Navbar>
