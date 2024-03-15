@@ -98,7 +98,7 @@ export default function Login({
         />
         <SubmitButton
           formAction={signIn}
-          className="bg-slate-700 rounded-md px-4 py-2 text-foreground mb-2"
+          className="bg-orange-700 rounded-md px-4 py-2 text-foreground mb-2"
           pendingText="Signing In..."
         >
           Sign In
@@ -111,7 +111,7 @@ export default function Login({
           Sign Up
         </SubmitButton>
         {searchParams?.message && (
-          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+          <p className="mt-4 p-4 bg-foreground/10 rounded-md text-foreground text-center">
             {searchParams.message}
           </p>
         )}
