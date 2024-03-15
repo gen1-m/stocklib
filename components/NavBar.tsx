@@ -24,7 +24,7 @@ export default function NavBar(params: Params) {
     return (pathname === "/");
   };
 
-  return (!isHomePage() && 
+  return !isHomePage ?? ( 
     <Navbar
       isBordered
       classNames={{
