@@ -6,7 +6,6 @@ import {
   Pagination, 
   Select, 
   SelectItem,
-  Button 
 } from "@nextui-org/react";
 import DisplayNews from "./display-news";
 
