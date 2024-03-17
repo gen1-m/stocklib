@@ -1,8 +1,9 @@
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-
+  
   const category = searchParams.get("category");
-  const searchValue = searchParams.get("searchValue"); // Assuming the parameter name is "searchValue"
+  const searchValue = searchParams.get("searchValue");
+  const exchange = searchParams.get("exchange");
 
   let apiUrl = `https://finnhub.io/api/v1/`;
 
@@ -14,8 +15,14 @@ export async function GET(request) {
   if (searchValue) {
     apiUrl += `search?q=${searchValue}&`;
   }
+  
+  if (exchange) {
+    apiUrl += `stock/market-status?exchange=${exchange}&`;
+  }
 
   apiUrl += `token=${process.env.FINNHUB_API_KEY}`;
+
+  // console.log(apiUrl);
 
   const options = {
     method: "GET",

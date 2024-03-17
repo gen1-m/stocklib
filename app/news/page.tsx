@@ -1,9 +1,19 @@
-import { getMarketNews } from "../lib/functions";
-import DisplayNews from "./display-news";
+import { getMarketNews, getMarketStatus } from "../lib/functions";
+import News from "./news";
 
-export default async function News() {
-  const res = await getMarketNews({ category: "general" });
-  const data = JSON.parse(res);
+interface DataResponse {
+  news?: Array<object>,
+  status?: object,
+}
 
-  return <DisplayNews data={data} />;
+export default async function NewsPage() {
+  const resNews = await getMarketNews({ category: "general" });
+  const resStatus = await getMarketStatus();
+  const data: DataResponse = {
+    news: JSON.parse(resNews),
+    status: JSON.parse(resStatus),
+  }
+  return (
+    <News data={data} />
+  );
 }

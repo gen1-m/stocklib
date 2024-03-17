@@ -5,6 +5,7 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
+  Button
 } from "@nextui-org/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -13,37 +14,35 @@ interface Params {
   authButton: any;
 }
 
-export default function NavBar(params: Params) {
-  const handleActivePage = (page: string) => {
-    const pathname: string = usePathname();
-    if (pathname == page) return true;
+const styleItems = [
+  "flex",
+  "relative",
+  "h-full",
+  "items-center ",
+  "data-[active=true]:after:content-['']",
+  "data-[active=true]:after:absolute",
+  "data-[active=true]:after:bottom-0",
+  "data-[active=true]:after:left-0",
+  "data-[active=true]:after:right-0",
+  "data-[active=true]:after:h-[2px]",
+  "data-[active=true]:after:rounded-[2px]",
+  "data-[active=true]:after:bg-orange-500",
+]
 
-    return false;
+export default function NavBar(params: Params) {
+  const authButton = params.authButton;
+
+  const pathname: string = usePathname();
+
+  const handleActivePage = (page: string) => {
+    return (pathname == page);
   };
 
-  return (
-    <Navbar
-      isBordered
-      classNames={{
-        item: [
-          "flex",
-          "relative",
-          "h-full",
-          "items-center",
-          "data-[active=true]:after:content-['']",
-          "data-[active=true]:after:absolute",
-          "data-[active=true]:after:bottom-0",
-          "data-[active=true]:after:left-0",
-          "data-[active=true]:after:right-0",
-          "data-[active=true]:after:h-[2px]",
-          "data-[active=true]:after:rounded-[2px]",
-          "data-[active=true]:after:bg-orange-500",
-        ],
-      }}
-    >
+  return !(pathname === "/") && ( 
+    <Navbar isBordered classNames={{item: styleItems}}>
       <NavbarBrand>
-        <Link href="/">
-          <p className="font-bold px-2 text-inherit">StockLib</p>
+        <Link href="/" className="text-orange-500">
+          <p className="font-semibold px-2">StockLib</p>
           <Image
             className="h-8 w-auto bg-white rounded-md"
             width={150}
@@ -53,7 +52,7 @@ export default function NavBar(params: Params) {
           />
         </Link>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-6" justify="center">
         <NavbarItem isActive={handleActivePage("/news")}>
           <Link color="foreground" href="/news">
             News
@@ -75,7 +74,12 @@ export default function NavBar(params: Params) {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">{params.authButton}</NavbarContent>
+        <NavbarContent justify="end">
+          <Button className="text-md bg-orange-700">
+            {authButton}
+          </Button>
+        </NavbarContent>
+      
     </Navbar>
   );
 }
