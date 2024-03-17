@@ -24,7 +24,7 @@ export default function DisplayNews(params: Params) {
 
   if (loading) {
     return (
-      <h1>
+      <h1 className="flex justify-center items-center my-auto text-xl">
         Loading...
       </h1>
     );
