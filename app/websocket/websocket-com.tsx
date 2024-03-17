@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSocket from "../hooks/useSocket";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsExporting from 'highcharts/modules/exporting'
