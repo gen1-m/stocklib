@@ -10,10 +10,6 @@ import {
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-interface Params {
-  authButton: any;
-}
-
 const styleItems = [
   "flex",
   "relative",
@@ -29,7 +25,7 @@ const styleItems = [
   "data-[active=true]:after:bg-orange-500",
 ]
 
-export default function NavBar(params: Params) {
+export default function NavBar(params: { authButton: any }) {
   const authButton = params.authButton;
 
   const pathname: string = usePathname();
@@ -58,8 +54,8 @@ export default function NavBar(params: Params) {
             News
           </Link>
         </NavbarItem>
-        <NavbarItem isActive={handleActivePage("/stock-list")}>
-          <Link color="foreground" href="/stock-list">
+        <NavbarItem isActive={handleActivePage("/stocklist")}>
+          <Link color="foreground" href="/stocklist">
             Stock List
           </Link>
         </NavbarItem>

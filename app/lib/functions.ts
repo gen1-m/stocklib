@@ -1,10 +1,4 @@
-interface Params {
-  category?: string;
-  searchValue?: string;
-  exchange?: string;
-}
-
-async function getMarketNews( params: Params ): Promise<any> {
+export async function getMarketNews( params: { category?: string} ): Promise<any> {
   const host = process.env.NEXT_PUBLIC_BASE_URL_HOST;
   const category = params.category;
   try {
@@ -19,7 +13,7 @@ async function getMarketNews( params: Params ): Promise<any> {
   }
 }
 
-async function getMarketStatus() : Promise<any> {
+export async function getMarketStatus() : Promise<any> {
   const host = process.env.NEXT_PUBLIC_BASE_URL_HOST;
   const exchange = "US";
   try {
@@ -35,7 +29,7 @@ async function getMarketStatus() : Promise<any> {
 
 }
 
-async function searchStocks({ params }: { params: Params }): Promise<any> {
+export async function searchStocks( params: { searchValue?: string } ): Promise<any> {
   const host = process.env.NEXT_PUBLIC_BASE_URL_HOST;
   const searchValue = params.searchValue;
 
@@ -48,9 +42,7 @@ async function searchStocks({ params }: { params: Params }): Promise<any> {
     return data;
   } catch (error) {
     console.error(error);
-    // Assuming Response is a custom class for error handling
     return Response.error();
   }
 }
 
-export { getMarketNews, getMarketStatus, searchStocks };

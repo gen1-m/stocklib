@@ -2,12 +2,10 @@ import Image from "next/image";
 import { marked } from "marked";
 import { Tooltip } from '@nextui-org/react';
 
-interface Params {
-  news?: any;
-  loading?: any;
-}
-
-export default function DisplayNews(params: Params) {
+export default function DisplayNews(params: { 
+  news?: any, 
+  loading?: any
+ }) {
 
   const loading = params.loading;
   const news = params.news;
