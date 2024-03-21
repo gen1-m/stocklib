@@ -1,11 +1,7 @@
 import Search from "@/components/Search";
 import { searchStocks } from "../lib/functions";
 
-interface Params {
-  searchInput: string;
-}
-
-export default async function StockList(params: Params) {
+export default async function StockList() {
   const randomSymbol: string = "test";
   const data = await searchStocks({ searchValue: randomSymbol });
   const parsedData = JSON.parse(data);
