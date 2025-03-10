@@ -1,3 +1,5 @@
+import { marked } from "marked";
+
 interface Params {
   category?: string;
   searchValue?: string;
@@ -48,9 +50,18 @@ async function searchStocks({ params }: { params: Params }): Promise<any> {
     return data;
   } catch (error) {
     console.error(error);
-    // Assuming Response is a custom class for error handling
     return Response.error();
   }
 }
 
-export { getMarketNews, getMarketStatus, searchStocks };
+function parseMd(string: string): string {
+  return marked(string, { async: false })
+    .toString()
+    .replace(/<[^>]*>/g, "");
+}
+
+function unixTimestampToDate(timestamp: number): Date {
+  return new Date(timestamp * 1000);
+}
+
+export { getMarketNews, getMarketStatus, searchStocks, parseMd, unixTimestampToDate };

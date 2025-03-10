@@ -73,14 +73,14 @@ export default function News(params: Params) {
     setLoading(false);
   }, [category]);
   
-
+  // pagination logic
   const indexOfLastNews = currentPage * newsPerPage;
   const indexOfFirstNews = indexOfLastNews - newsPerPage;
   const currentNews = news.slice(indexOfFirstNews, indexOfLastNews);
   const totalPages = Math.ceil(news.length/newsPerPage);
 
   return (
-    <main className="w-full">
+    <main className="flex flex-col w-full">
       <div className="flex flex-col font-extrabold mt-7 justify-center items-center my-auto">
         <h1 className="text-4xl self-center">
           Latest <span className="text-orange-800">market</span> news

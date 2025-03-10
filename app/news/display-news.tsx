@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { marked } from "marked";
 import { Tooltip } from '@nextui-org/react';
+import { parseMd, unixTimestampToDate } from "../lib/functions";
 
 interface Params {
   news?: any;
@@ -11,16 +11,6 @@ export default function DisplayNews(params: Params) {
 
   const loading = params.loading;
   const news = params.news;
-
-  function parseMd(string: string): string {
-    return marked(string, { async: false })
-      .toString()
-      .replace(/<[^>]*>/g, "");
-  }
-
-  function unixTimestampToDate(timestamp: number): Date {
-    return new Date(timestamp * 1000);
-  }
 
   if (loading) {
     return (
