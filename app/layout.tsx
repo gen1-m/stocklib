@@ -28,9 +28,9 @@ export default function RootLayout({
           <NavBar authButton={<AuthButton/>}/>
             <main className="min-h-screen flex flex-col items-center">
               {children}
-              <Analytics />
             </main>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
