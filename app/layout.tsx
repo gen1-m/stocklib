@@ -3,6 +3,7 @@ import { Providers } from "./providers";
 import NavBar from "@/components/NavBar";
 import "./globals.css";
 import AuthButton from "@/components/AuthButton";
+import { Analytics } from "@vercel/analytics/next";
 
 const font = Roboto({ subsets: ['latin'], weight: ['400'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <NavBar authButton={<AuthButton/>}/>
             <main className="min-h-screen flex flex-col items-center">
               {children}
+              <Analytics />
             </main>
         </Providers>
       </body>
