@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Tooltip } from '@nextui-org/react';
 import { parseMd, unixTimestampToDate } from "../lib/functions";
+import he from 'he';
 
 interface Params {
   news?: any;
@@ -30,10 +31,11 @@ export default function DisplayNews(params: Params) {
           >
             {news.image ? (
               <Image
-                className="mb-4 rounded-sm items-center w-auto h-auto"
+                className="mb-4 rounded-sm items-center min-w-full h-2/5 max-h-unit-5xl"
                 src={news.image}
-                width={300}
-                height={300}
+                // for hd images ;) 
+                width={1920}
+                height={1080}
                 alt="Thumbnail"
                 priority={true}
               />
@@ -55,17 +57,17 @@ export default function DisplayNews(params: Params) {
                 <p>No Image</p>
               </div>
             )}
-            <h2 className="text-lg font-semibold">{news.headline}</h2>
+            <h2 className="text-lg font-semibold">{news.headline.length > 65 ? `${he.decode(parseMd(news.headline.substring(0, 65)))}...` : he.decode(news.headline) }</h2>
             {/* Checking if there is a summary or not */}
             {news.summary ? (
-              <p className="flex-1 mt-2 mb-2 text-gray-400 text-ellipsis overflow-hidden">
-                {news.summary.length > 250
-                  ? `${parseMd(news.summary.substring(0, 250))}...`
-                  : parseMd(news.summary)}
+              <p className="flex-1 mt-2 mb-2 text-gray-400 text-ellipsis overflow-hidden self-start">
+                {news.summary.length > 170
+                  ? `${he.decode(parseMd(news.summary.substring(0, 170)))}...`
+                  : he.decode(parseMd(news.summary))}
               </p>
             ) : (
-              <p className="flex-1 mt-2 mb-2 text-gray-400 text-ellipsis overflow-hidden text-center">
-                No Summary. Please click the link below.
+              <p className="flex-1 mt-2 mb-2 text-red-300 text-ellipsis overflow-hidden self-center">
+                Unfornately, there is no summary available. Please click the link below.
               </p>
             )}
             <a
