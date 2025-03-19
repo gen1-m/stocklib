@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import CustomModal from "@/components/EmailChangeModal";
-import { passChange } from "./buttons_logic";
+// import { passChange } from "./buttons_logic";
 
 const emailChange = async (formData: FormData) => {
   "use server";
@@ -54,7 +54,7 @@ export default async function Profile({
               placeholder="you@mail.com"
             />
           </div>
-          <div className="flex text-xl justify-between gap-unit-8xl items-center">
+          {/* <div className="flex text-xl justify-between gap-unit-8xl items-center">
             <span>change password</span>
             <CustomModal
               type="password"
@@ -64,7 +64,7 @@ export default async function Profile({
               htmlFor="password"
               placeholder="********"
             />
-          </div>
+          </div> */}
           {/* <div className="flex text-xl justify-between gap-unit-8xl items-center">
             <span className="">change profile picture</span>
             <Button className="bg-zinc-800 text-base">Change</Button>
