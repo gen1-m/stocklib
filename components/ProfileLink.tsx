@@ -1,15 +1,21 @@
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
-export default function ProfileLink() {
+export default async function ProfileLink() {
   const supabase = createClient();
 
-  const user = supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return (user !== null) ? (
+  if (!user) {
+    return redirect("/login");
+  }
+
+  return (
     <Link href="/profile" color="foreground">
       Profile
     </Link>
-  ) : 
-  (<></>)
+  )
 }
