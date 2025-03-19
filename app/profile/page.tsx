@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import CustomModal from "@/components/EmailChangeModal";
 import { passChange } from "./buttons_logic";
 
-export const emailChange = async (formData: FormData) => {
+const emailChange = async (formData: FormData) => {
   "use server";
   const supabase = createClient();
   const newEmail = formData.get("email") as string;
