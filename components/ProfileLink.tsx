@@ -9,13 +9,10 @@ export default async function ProfileLink() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    return redirect("/login");
-  }
-
-  return (
+  return user ? (
     <Link href="/profile" color="foreground">
       Profile
     </Link>
-  )
+  ) : 
+  (<></>)
 }
